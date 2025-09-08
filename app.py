@@ -1,6 +1,9 @@
+import pandas as pd
 import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
+
+car_data = pd.read_csv('vehicles_us.csv')
 
 # Validar que los datos existen y tienen las columnas necesarias
 if 'car_data' in locals() and not car_data.empty and {'odometer', 'price', 'model'}.issubset(car_data.columns):
@@ -53,4 +56,4 @@ if 'car_data' in locals() and not car_data.empty and {'odometer', 'price', 'mode
         st.plotly_chart(fig_scatter, use_container_width=True)
 
 else:
-    st.warning("Los datos necesarios no están disponibles o están incompletos.")
+    st.warning("Los datos necesarios no están disponibles o están incompletos.")sponibles o están incompletos.")
