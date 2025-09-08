@@ -1,34 +1,56 @@
 import streamlit as st
-import pandas as pd
-import plotly as px
+import plotly.express as px
 import plotly.graph_objects as go
 
-st.header("Analisis de vehiculos usados")
+# Validar que los datos existen y tienen las columnas necesarias
+if 'car_data' in locals() and not car_data.empty and {'odometer', 'price', 'model'}.issubset(car_data.columns):
 
-# Leer los datos del archivo CSV
-car_data = pd.read_csv('vehicles_us.csv')
+    # Casilla para mostrar histograma de odómetro
+    show_histogram = st.checkbox('Mostrar histograma de odómetro')
 
-# Crear un botón en la aplicación Streamlit
-hist_button = st.button('Construir histograma')
+    if show_histogram:
+        st.subheader('Distribución del Odómetro')
+        st.write('Creación de un histograma para el conjunto de datos de anuncios de venta de coches')
 
-# Lógica a ejecutar cuando se hace clic en el botón
-if hist_button:
-    # Escribir un mensaje en la aplicación
-    st.write('Creación de un histograma para el conjunto de datos de anuncios de venta de coches')
+        fig_odometer = go.Figure()
+        fig_odometer.add_trace(go.Histogram(
+            x=car_data['odometer'],
+            nbinsx=30,
+            marker_color='teal',
+            opacity=0.75
+        ))
+        fig_odometer.update_layout(
+            title='Distribución del Odómetro',
+            xaxis_title='Kilometraje',
+            yaxis_title='Frecuencia',
+            bargap=0.1,
+            template='plotly_white'
+        )
+        st.plotly_chart(fig_odometer, use_container_width=True)
 
-    # Crear un histograma utilizando plotly.graph_objects
-    # Se crea una figura vacía y luego se añade un rastro de histograma
-    fig = go.Figure(data=[go.Histogram(x=car_data['odometer'])])
+    # Casilla para mostrar gráfico de dispersión de precios por modelo
+    show_scatter = st.checkbox('Mostrar gráfico de dispersión de precios por modelo')
 
-    # Opcional: Puedes añadir un título al gráfico si lo deseas
-    fig.update_layout(title_text='Distribución del Odómetro')
+    if show_scatter:
+        st.subheader('Relación entre Precio y Modelo')
+        st.write('Visualización de cómo varía el precio según el modelo de coche')
 
-    # Mostrar el gráfico Plotly interactivo en la aplicación Streamlit
-    # 'use_container_width=True' ajusta el ancho del gráfico al contenedor
-    st.plotly_chart(fig, use_container_width=True)
+        fig_scatter = px.scatter(
+            car_data,
+            x='model',
+            y='price',
+            color='model',
+            title='Precio vs. Modelo de Coche',
+            labels={'model': 'Modelo', 'price': 'Precio'},
+            hover_data=['odometer'],
+            opacity=0.7
+        )
+        fig_scatter.update_layout(
+            xaxis_title='Modelo',
+            yaxis_title='Precio',
+            template='plotly_white'
+        )
+        st.plotly_chart(fig_scatter, use_container_width=True)
 
-# crear una casilla de verificación
-build_histogram = st.checkbox('Construir un histograma')
-
-if build_histogram: # si la casilla de verificación está seleccionada
-    st.write('Construir un histograma para la columna odómetro')
+else:
+    st.warning("Los datos necesarios no están disponibles o están incompletos.")

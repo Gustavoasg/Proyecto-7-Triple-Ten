@@ -1,4 +1,3 @@
 # Proyecto-7-Triple-Ten
 Proyecto 7 de Triple Ten
-Este es un proyecto para crear una pagina web que analizara los datos de Autos usados.
-https://proyecto-7-triple-ten.onrender.com
+Esta aplación se creo con la finalidad de poder analizar los datos de los vehiculos usados
