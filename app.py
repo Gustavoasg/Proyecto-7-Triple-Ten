@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import plotply as px
+import plotly as px
 import plotly.graph_objects as go
 
 st.header("Analisis de vehiculos usados")
