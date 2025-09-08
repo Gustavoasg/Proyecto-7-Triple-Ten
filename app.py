@@ -56,4 +56,4 @@ if 'car_data' in locals() and not car_data.empty and {'odometer', 'price', 'mode
         st.plotly_chart(fig_scatter, use_container_width=True)
 
 else:
-    st.warning("Los datos necesarios no están disponibles o están incompletos.")sponibles o están incompletos.")
+    st.warning("Los datos necesarios no están disponibles o están incompletos.")
